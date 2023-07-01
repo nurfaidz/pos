@@ -3,21 +3,11 @@
     <div class="content-wrapper">
         <div class="row">
             <div class="home-tab">
-                <div class="d-sm-flex align-items-center justify-content-between border-bottom">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ url('/sale') }}">Penjualan</a>
-                        </li>
-                    </ul>
-                </div>
                 <div class="tab-content tab-content-basic">
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Daftar Penjualan</h4>
+                                <h4 class="card-title">Cetak Nota</h4>
                                 <div class="alert alert-success alert-dismissible">
                                     <i class="fa fa-check icon"></i>
                                     Data Transaksi telah selesai.

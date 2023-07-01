@@ -17,12 +17,13 @@
                     <div class="col-lg-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <h4 class="card-title">Laporan</h4>
-                                    <button type="button" id="add-member" class="btn btn-outline-primary btn-lg"
-                                        onclick="updatePeriod()"><i class="fa fa-pencil"></i>
-                                        Ubah Periode</button>
-                                </div>
+                                <h4 class="card-title">Laporan</h4>
+                                <a href="{{ route('report.export_pdf', [$tanggalAwal, $tanggalAkhir]) }}"
+                                    class="btn btn-outline-secondary btn-lg"><i class="fa fa-file-excel-o"></i>
+                                    Export</a>
+                                <button type="button" id="add-member" class="btn btn-outline-primary btn-lg"
+                                    onclick="updatePeriod()"><i class="fa fa-pencil"></i>
+                                    Ubah Periode</button>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card-datatable table-rounded-outline">

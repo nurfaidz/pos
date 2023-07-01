@@ -20,8 +20,8 @@
                                 <h4 class="card-title">Daftar Penjualan</h4>
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="card-datatable table-rounded-outline">
-                                            <table id="dataTable" class="table table-borderless nowrap">
+                                        <div class="card-datatable table-rounded-outline table-responsive">
+                                            <table id="dataTable" class="table table-borderless">
                                                 <thead>
                                                     <tr>
                                                         <th>No</th>

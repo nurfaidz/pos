@@ -30,8 +30,6 @@ use App\Http\Controllers\UserController;
 
 // Login
 Auth::routes();
-
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/', [LoginController::class, 'responseIndex']);
 
 Route::group(['middleware' => 'auth'], function () {

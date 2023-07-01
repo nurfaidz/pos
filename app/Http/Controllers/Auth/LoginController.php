@@ -51,7 +51,7 @@ class LoginController extends Controller
 
         if (auth()->attempt(array('email' => $credential['email'], 'password' => $credential['password']))) {
             if (auth()->user()->role == 'kasir') {
-                return redirect()->intended('home');
+                return redirect()->intended('dashboard');
             } else if (auth()->user()->role == 'admin') {
                 return redirect()->intended('dashboard');
             }
@@ -66,10 +66,10 @@ class LoginController extends Controller
             if ($user->role == 'admin') {
                 return redirect()->intended('dashboard');
             } else if ($user->role == 'kasir') {
-                return redirect()->intended('home');
+                return redirect()->intended('dashboard');
             }
+            return view('auth.login');
         }
-        return view('auth.login');
     }
 
     public function logout(Request $request)

@@ -70,4 +70,13 @@ class ReportController extends Controller
             ->of($data)
             ->make(true);
     }
+
+    public function exportPDF($awal, $akhir)
+    {
+        $data = $this->getData($awal, $akhir);
+        $pdf = PDF::loadview('reports.export', compact('awal', 'akhir', 'data'));
+        $pdf->setPaper('a4', 'potrait');
+
+        return $pdf->stream('Report Pendapatan-' . date('Y-m-d-his') . '.pdf');
+    }
 }

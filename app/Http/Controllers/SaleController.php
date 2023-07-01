@@ -44,8 +44,12 @@ class SaleController extends Controller
                 return indonesianDate($sales->created_at, false);
             })
             ->addColumn('member_code', function ($data) {
-                return '
-                        <span class="label label-dark">' . $data->member->member_code . '</span>';
+                if ($data->member != null) {
+                    return '
+                            <span class="label label-dark">' . $data->member->member_code . '</span>';
+                } else {
+                    return '<span>0</span>';
+                }
             })
             ->editColumn('discount', function ($sales) {
                 return $sales->discount . '%';
