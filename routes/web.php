@@ -2,9 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController,
-    App\Http\Controllers\HomeController,
     App\Http\Controllers\Auth\LoginController,
     App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ExpendController;
@@ -30,7 +28,12 @@ use App\Http\Controllers\UserController;
 
 // Login
 Auth::routes();
-Route::get('/', [LoginController::class, 'responseIndex']);
+
+Route::get('/', function () {
+    return redirect()->route('login');
+});
+
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
     // Home
@@ -43,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Route Product
         Route::resource('/product', ProductController::class)->except('create', 'show');
         Route::get('/product/select', [ProductController::class, 'select']);
+        Route::get('/product/list-product', [ProductController::class, 'getProduct']);
         Route::post('/product/delete-selected', [ProductController::class, 'checkBoxDelete'])->name('product.delete_selected');
 
         // Route Member

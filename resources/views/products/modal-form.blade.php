@@ -24,7 +24,7 @@
                         <div class="invalid-feedback category_error"></div>
                     </div>
                     <div class="form-group">
-                        <label for="merk">Merk</label>
+                        <label for="merk" id="label-merk">Merk</label>
                         <input type="text" name="merk" id="merk" class="form-control">
                         <div class="invalid-feedback merk_error"></div>
                     </div>
@@ -34,9 +34,10 @@
                         <div class="invalid-feedback price_error"></div>
                     </div>
                     <div class="form-group">
-                        <label for="stock">Stok<span class="text-danger">*</span></label>
+                        <label for="stock" id="label-stock">Stok<span class="text-danger"
+                                id="label-stock">*</span></label>
                         <input type="number" name="stock" id="stock" class="form-control">
-                        <div class="invalid-feedback stok_error"></div>
+                        <div class="invalid-feedback stock_error"></div>
                     </div>
                 </form>
             </div>

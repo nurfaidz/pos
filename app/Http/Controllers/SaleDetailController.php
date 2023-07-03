@@ -20,7 +20,6 @@ class SaleDetailController extends Controller
         $member = Member::orderBy('member_name')->get();
         $diskon = Setting::first()->discount ?? 0;
 
-        // Cek apakah ada transaksi yang sedang berjalan
         if ($sale_id = session('sale_id')) {
             $penjualan = Sale::find($sale_id);
             $memberSelected = $penjualan->member ?? new Member();

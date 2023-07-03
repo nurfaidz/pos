@@ -24,15 +24,28 @@
                                 <button onclick="checkBoxDelete('{{ route('product.delete_selected') }}')" type="button"
                                     id="delete-product" class="btn btn-outline-danger btn-lg"><i class="fa fa-trash"></i>
                                     Hapus Produk</button>
-                                {{-- <button type="button" id="cetak" class="btn btn-outline-secondary btn-lg"><i
-                                        class="fa fa-barcode"></i>
-                                    Cetak Barcode</button> --}}
+                                <div class="form-group col-4">
+                                    <form action="" method="post">
+                                        @method('get')
+                                        @csrf
+                                        <select name="status" id="status" class="select2 form-control"
+                                            onchange="selectFunction()">
+                                            <option hidden disabled selected value>Pilih Kategori</option>
+                                            @foreach ($categories as $item)
+                                                <option value="{{ $item->category_id }}"
+                                                    {{ request('status') == $item->category_id ? 'selected' : '' }}>
+                                                    {{ $item->category_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                                </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="card-datatable table-rounded-outline">
                                             <form action="" method="POST" class="product-form">
                                                 @csrf
-                                                <table id="dataTable" class="table table-borderless nowrap">
+                                                <table id="dataTable" class="table table-borderless table-responsive">
                                                     <thead>
                                                         <tr>
                                                             <th>
@@ -43,7 +56,7 @@
                                                             <th>Nama</th>
                                                             <th>Kategori</th>
                                                             <th>Harga Jual</th>
-                                                            <th>Diskon</th>
+                                                            <th>Merk</th>
                                                             <th>Stok</th>
                                                             <th>Actions</th>
                                                         </tr>
@@ -78,19 +91,19 @@
             $('#product_name').removeClass('invalid-more');
         });
 
-        $(document).ready(function() {
+        let status = 0;
+
+        const dataTable_Ajax = (status) => {
             const datatable = $('#dataTable');
             console.log(datatable.length);
             if (datatable.length) {
                 const dt_table = datatable.dataTable({
-                    responsive: true,
                     processing: true,
-                    autoWidth: false,
                     aLengthMenu: [
                         [5, 10, 15, -1],
                         [5, 10, 15, "All"]
                     ],
-                    ajax: "{{ url('/product') }}",
+                    ajax: `/product/list-product?status=${status}`,
                     columns: [{
                             data: 'select_all',
                             searchable: false,
@@ -119,6 +132,10 @@
                             name: 'Harga Jual',
                         },
                         {
+                            data: 'merk',
+                            name: 'Merk',
+                        },
+                        {
                             data: 'stock',
                             name: 'Stok',
                         },
@@ -130,16 +147,18 @@
                         },
                     ],
                     columnDefs: [{
-                        targets: 7,
+                        targets: 8,
                         className: 'text-center',
                     }]
-                })
+                });
             }
 
             $('[name=select_all]').on('click', function() {
                 $(':checkbox').prop('checked', this.checked);
             });
-        });
+        }
+
+        dataTable_Ajax(status);
 
         $.ajax({
             url: "{{ url('product/select') }}",
@@ -164,6 +183,19 @@
 
             }
         });
+
+        /**
+         *
+         * function filter with select by position and division.
+         *
+         */
+
+        const selectFunction = () => {
+            status = $('#status').val();
+            (status === null) ? status = 0: status;
+            $("#dataTable").DataTable().destroy();
+            dataTable_Ajax(status);
+        };
 
         $(document).on('click', '#add-product', function() {
             $('#modal-form').modal('show');
@@ -487,5 +519,26 @@
                 return;
             }
         }
+
+        $(document).ready(function() {
+            $('#category_id').change(function() {
+                let kategori = $('#category_id option:selected').text();
+                if (kategori == "Barang") {
+                    document.getElementById('stock').setAttribute('type', 'number');
+                    document.getElementById('label-stock').style.display = "block";
+                    document.getElementById('merk').setAttribute('type', 'text');
+                    document.getElementById('label-merk').style.display = "block";
+                } else {
+                    document.getElementById('stock').setAttribute('type', 'hidden');
+                    document.getElementById('label-stock').style.display = "none";
+                    document.getElementById('merk').setAttribute('type', 'hidden');
+                    document.getElementById('label-merk').style.display = "none";
+                }
+            });
+        });
+
+        $(document).ready(() => {
+            $('#status').select2();
+        });
     </script>
 @endsection

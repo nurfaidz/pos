@@ -52,7 +52,7 @@ class SaleController extends Controller
                 }
             })
             ->editColumn('discount', function ($sales) {
-                return $sales->discount . '%';
+                return $sales->member->discount_member . '%';
             })
             ->editColumn('kasir', function ($sales) {
                 return $sales->user->name ?? '';
@@ -119,11 +119,16 @@ class SaleController extends Controller
 
         $detail = DetailSale::where('sale_id', $penjualan->sale_id)->get();
         foreach ($detail as $item) {
-            $item->discount = $request->discount;
-            $item->update();
+            if ($request->member_id != null) {
+                $item->discount = $member->discount_member;
+                $item->update();
+            } else {
+                $item->discount = $request->discount;
+                $item->update();
+            }
 
             $produk = Product::find($item->product_id);
-            $produk->stock -= $item->amount;
+            // $produk->stock -= $item->amount;
             $produk->update();
         }
 

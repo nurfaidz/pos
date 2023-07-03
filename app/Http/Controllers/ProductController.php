@@ -24,27 +24,64 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::leftjoin('categories', 'categories.category_id', '=', 'products.category_id')->select('products.*', 'category_name')->get();
+        $categories = Categorie::all();
+        $products = Product::leftjoin('categories', 'categories.category_id', '=', 'products.category_id')->select('products.*', 'category_name');
 
-        if ($request->ajax()) {
-            return DataTables::of($products)
-                ->addIndexColumn()
-                ->addColumn('select_all', function ($data) {
-                    return '
-                    <input type="checkbox" name="product_id[]" value="' . $data->product_id . '">';
-                })
-                ->addColumn('product_code', function ($data) {
-                    return '
-                    <span class="badge badge-dark">' . $data->product_code . '</span>';
-                })
-                ->addColumn('action', function ($data) {
-                    $actionBtn = '<button title="Edit" type="button" data-toggle="modal" data-target="#modal-form" data-id="' . $data->product_id . '" class="edit btn btn-outline-success btn-lg" id="edit">Edit</button> <form id="form_delete_data" style="display:inline" class="" action="/product/delete/' . $data->product_id . '" method="post" title="Delete"><button title="Hapus" type="submit"  class="btn btn-outline-danger btn-lg" onclick="sweetConfirm(' . $data->product_id . ')">Hapus</button><input type="hidden" name="_method" value="delete" /><input type="hidden" name="_token" value="' . csrf_token() . '"></form>';
-                    return $actionBtn;
-                })
-                ->rawColumns(['action', 'product_code', 'select_all'])
-                ->make(true);
+        if (request('status')) {
+            $products->where('categories.category_id', $request->status);
         }
-        return view('products.index');
+
+        return view('products.index', [
+            'products' => $products,
+            'categories' => $categories
+        ]);
+    }
+
+    /**
+     * Display a get of the product.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getProduct(Request $request)
+    {
+        $categories = Categorie::all();
+        $products = Product::leftjoin('categories', 'categories.category_id', '=', 'products.category_id')->select('products.*', 'category_name');
+
+        if (request('status') != 0) {
+            $products->where('categories.category_id', $request->status);
+        }
+
+        return DataTables::of($products->get())
+            ->addIndexColumn()
+            ->addColumn('select_all', function ($data) {
+                return '
+                    <input type="checkbox" name="product_id[]" value="' . $data->product_id . '">';
+            })
+            ->addColumn('product_code', function ($data) {
+                return '
+                    <span class="badge badge-dark">' . $data->product_code . '</span>';
+            })
+            ->addColumn('merk', function ($data) {
+                if ($data->merk != null) {
+                    return '<span>' . $data->merk . '</span>';
+                } else {
+                    return '<span>-</span>';
+                }
+            })
+            ->addColumn('stock', function ($data) {
+                if ($data->stock != null) {
+                    return '<span>' . $data->stock . '</span>';
+                } else {
+                    return '<span>-</span>';
+                }
+            })
+            ->addColumn('action', function ($data) {
+                $actionBtn = '<button title="Edit" type="button" data-toggle="modal" data-target="#modal-form" data-id="' . $data->product_id . '" class="edit btn btn-outline-success btn-lg" id="edit">Edit</button> <form id="form_delete_data" style="display:inline" class="" action="/product/delete/' . $data->product_id . '" method="post" title="Delete"><button title="Hapus" type="submit"  class="btn btn-outline-danger btn-lg" onclick="sweetConfirm(' . $data->product_id . ')">Hapus</button><input type="hidden" name="_method" value="delete" /><input type="hidden" name="_token" value="' . csrf_token() . '"></form>';
+                return $actionBtn;
+            })
+            ->rawColumns(['action', 'product_code', 'select_all', 'merk', 'stock'])
+            ->make(true);
     }
 
     /**

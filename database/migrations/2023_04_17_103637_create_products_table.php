@@ -22,7 +22,7 @@ class CreateProductsTable extends Migration
             $table->string('merk')->nullable();
             $table->integer('price');
             $table->tinyInteger('discount')->default(0)->nullable();
-            $table->integer('stock');
+            $table->integer('stock')->nullable();
             $table->timestamps();
         });
     }

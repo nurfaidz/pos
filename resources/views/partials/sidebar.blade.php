@@ -28,6 +28,12 @@
             </li>
             <li class="nav-item nav-category">Transaction</li>
             <li class="nav-item">
+                <a class="nav-link" href="{{ route('transaction.new') }}">
+                    <i class="menu-icon mdi mdi-cash-register"></i>
+                    <span class="menu-title">Transaksi Baru</span>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{{ url('/expend') }}">
                     <i class="menu-icon mdi mdi-chart-line"></i>
                     <span class="menu-title">Pengeluaran</span>
@@ -37,12 +43,6 @@
                 <a class="nav-link" href="{{ url('/sale') }}">
                     <i class="menu-icon mdi mdi-file-chart"></i>
                     <span class="menu-title">Penjualan</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('transaction.new') }}">
-                    <i class="menu-icon mdi mdi-cash-register"></i>
-                    <span class="menu-title">Transaksi Baru</span>
                 </a>
             </li>
             <li class="nav-item nav-category">Report</li>

@@ -32,7 +32,7 @@
                         <p class="mb-1 mt-3 font-weight-semibold">{{ $data->name }}</p>
                         <p class="fw-light text-muted mb-0">{{ $data->email }}</p>
                     </div>
-                    <a class="dropdown-item" href="{{ route('logout') }}"><i
+                    <a class="dropdown-item" href="{{ url('logout') }}"><i
                             class="dropdown-item-icon mdi mdi-power text-primary me-2"></i> Sign
                         Out</a>
                 </div>

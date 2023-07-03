@@ -75,7 +75,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-lg-7">
+                                    <div class="col-lg-8">
                                         <div class="tampil-bayar bg-primary"></div>
                                         <div class="tampil-terbilang"></div>
                                     </div>
